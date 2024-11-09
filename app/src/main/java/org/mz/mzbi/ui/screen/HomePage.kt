@@ -1,5 +1,6 @@
 package org.mz.mzbi.ui.screen
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -17,6 +18,8 @@ import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.tv.material3.Tab
 import androidx.tv.material3.TabRow
@@ -41,40 +44,50 @@ class HomePage {
             delay(250.microseconds)
             tabPanelIndex = selectedTabIndex
         }
+        Column {
+            TabRow(
+                selectedTabIndex = selectedTabIndex,
+                modifier = Modifier
+                    .focusRestorer()
+                    .paddingFromBaseline(20.dp)
+                    .padding(20.dp)
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+            )
+            {
+                tabs.forEachIndexed { index, tab ->
+                    key(index) {
+                        Tab(
+                            selected = index == selectedTabIndex,
+                            onFocus = { selectedTabIndex = index },
+                            onClick = {
+                                selectedTabIndex = index
+                                if (selectedTabIndex == 0)
+                                    navController.navigate("ReComPage")
+                            },
+                            content = {
 
-        TabRow(
-            selectedTabIndex = selectedTabIndex,
-            modifier = Modifier
-                .focusRestorer()
-                .paddingFromBaseline(20.dp)
-                .padding(20.dp)
-                .wrapContentWidth(Alignment.CenterHorizontally)
-        )
-        {
-            tabs.forEachIndexed { index, tab ->
-                key(index) {
-                    Tab(
-                        selected = index == selectedTabIndex,
-                        onFocus = { selectedTabIndex = index },
-                        onClick = {
-//                            if (selectedTabIndex==1)
-//                                navController.navigate("SettingPage")
-                        },
-                        content = {
-
-                            Text(
-                                text = tab,
-                                fontSize = 15.sp,
-                                modifier = Modifier.padding(
-                                    horizontal = 16.dp,
-                                    vertical = 6.dp
+                                Text(
+                                    text = tab,
+                                    fontSize = 15.sp,
+                                    modifier = Modifier.padding(
+                                        horizontal = 16.dp,
+                                        vertical = 6.dp
+                                    )
                                 )
-                            )
 
-                        }
-                    )
+                            }
+                        )
+                    }
+                }
+            }
+            NavHost(navController = navController, startDestination = "ReComPage") {
+                //声明名为MainPage的页面路由
+                composable("ReComPage") {
+                    //页面路由对应的页面组件
+                    ReComPage().UpVideoCardList()
                 }
             }
         }
+
     }
 }

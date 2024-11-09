@@ -13,9 +13,6 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="CardList">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="MovieCard">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2024-11-08T05:22:50.828156900Z">
@@ -52,6 +49,17 @@
       <SelectionState runConfigName="Cards (1)">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2024-11-09T06:13:40.213143500Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\15996\.android\avd\Television_1080p_API_34_2.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="MainActivity">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2024-11-09T10:33:26.229318100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\15996\.android\avd\Television_1080p_API_34_2.avd" />
