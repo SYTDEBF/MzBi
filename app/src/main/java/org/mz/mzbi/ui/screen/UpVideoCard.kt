@@ -1,5 +1,8 @@
 package org.mz.mzbi.ui.screen
 
+import android.content.ContentValues.TAG
+import android.util.Log
+import android.widget.ImageView
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,38 +43,30 @@ import androidx.tv.material3.Border
 import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.Text
-import coil.Coil
-import coil.ImageLoader
 import coil.compose.AsyncImage
-import coil.memory.MemoryCache
-import coil.request.CachePolicy
 import coil.request.ImageRequest
-import coil.util.CoilUtils
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
+
+
 import org.mz.mzbi.R
 
 class UpVideoCard {
     @Composable
-    @Preview(showBackground = true)
-    fun Cards() {
-        val okHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain -> //前置处理
-            val request=chain.request().newBuilder()
-                .addHeader("user-agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0")
-                .addHeader("referer","https://www.bilibili.com/").build()
-            val response=chain.proceed(request)
-            //后置处理
-            response
-        }).build()
-        val imageLoader = ImageLoader.Builder(LocalContext.current)
-            .diskCachePolicy(CachePolicy.ENABLED)  //磁盘缓策略 ENABLED、READ_ONLY、WRITE_ONLY、DISABLED
-            .crossfade(true) //淡入淡出
-            .okHttpClient {  //设置okhttpClient实例
-                okHttpClient
-            }.build()
-
-        Coil.setImageLoader(imageLoader)
+    fun Cards(vd:String) {
+//        val okHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain -> //前置处理
+//            val request=chain.request().newBuilder()
+//                .build()
+//            val response=chain.proceed(request)
+//            //后置处理
+//            response
+//        }).build()
+//        val imageLoader = ImageLoader.Builder(LocalContext.current)
+//            .diskCachePolicy(CachePolicy.ENABLED)  //磁盘缓策略 ENABLED、READ_ONLY、WRITE_ONLY、DISABLED
+//            .crossfade(true) //淡入淡出
+//            .okHttpClient {  //设置okhttpClient实例
+//                okHttpClient
+//            }.build()
+//
+//        Coil.setImageLoader(imageLoader)
         Column {
             Card(
                 onClick = {},
@@ -101,20 +96,34 @@ class UpVideoCard {
                 Column {
                     Box(Modifier.align(Alignment.Start)) {
                         AsyncImage(
+
                             modifier = Modifier
                                 .height(145.dp).widthIn(220.dp,500.dp)
                                 .paddingFromBaseline(0.dp, 2.dp),
 
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://i2.hdslb.com/bfs/archive/366f1f675a295d3da685af28289000c3f3153558.jpg@672w_378h_1c_!web-home-common-cover.avif").diskCachePolicy(
-                                    CachePolicy.ENABLED)
-                                .build(),
+                                .data(vd).addHeader("user-agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0").addHeader("Referer","https://www.bilibili.com/").build()
+
+//                                    add("Accept","image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8").
+//                        add().add("user-agent","").add("sec-fetch-dest","image")
+//                            .add(":method","GET").add(":scheme","https")
+                           // .build()).bu
+                                ,
 
                             error = painterResource(R.drawable.ic_broken_image),
                             placeholder = painterResource(R.drawable.loading_img),
-
+                            onSuccess = {
+                                Log.d(TAG, "success")
+                            },
+                            onError = {
+                                Log.d(TAG, "Error")
+                            }, onLoading = {
+                                Log.d(TAG, "loadding")
+                            },
                             contentDescription = null,
                         )
+
+
                         Row (Modifier.fillMaxWidth().fillMaxHeight(0.62f),horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Bottom) {
                             Row() {
                                 Image(
@@ -161,7 +170,7 @@ class UpVideoCard {
                     }
                     Text(
                         modifier = Modifier
-                            .width(254.dp)
+                            .fillMaxWidth()
                             .padding(5.dp,0.dp).offset(0.dp, (-10).dp),
                         text = "和敬公主：乾隆宠女儿，会有多疯狂？【乾隆往事】",
                         fontStyle = FontStyle.Normal,
@@ -174,13 +183,13 @@ class UpVideoCard {
                     Row (Modifier.fillMaxWidth().padding(5.dp,3.dp),horizontalArrangement = Arrangement.SpaceBetween){
                         Row() {
                             Image(
-                                modifier = Modifier.width(20.dp),
+                                modifier = Modifier.width(20.dp).align(Alignment.CenterVertically),
                                 painter = painterResource(id = R.drawable.up_32),
                                 contentDescription = stringResource(R.string.hello_blank_fragment)
                             )
                             Text(
                                 text = "正在吃的舒服的",
-
+                                Modifier.align(Alignment.CenterVertically).offset(0.dp, (-1).dp),
                                 fontWeight = FontWeight.Thin,
                                 fontSize = 12.sp,
                                 maxLines = 1,
@@ -189,6 +198,7 @@ class UpVideoCard {
                         }
                         Row(horizontalArrangement = Arrangement.End) {
                             Text(
+                                modifier = Modifier.align(Alignment.CenterVertically),
                                 text = "3天前",
                                 fontWeight = FontWeight.Thin,
                                 fontSize = 12.sp
@@ -199,4 +209,5 @@ class UpVideoCard {
             }
         }
     }
+
 }

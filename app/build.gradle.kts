@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
 }
 
 android {
@@ -46,6 +47,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
 }
 
 dependencies {
@@ -58,6 +60,8 @@ dependencies {
     implementation(libs.androidx.tv.material)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
     implementation(libs.coil.compose)
     implementation (libs.androidx.navigation.compose)
     implementation(libs.volley)
