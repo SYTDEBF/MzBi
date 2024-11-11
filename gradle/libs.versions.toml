@@ -17,6 +17,7 @@ tvMaterial = "1.0.0"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 volley = "1.2.1"
+runtimeLivedata = "1.7.5"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -40,6 +41,7 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 okhttp = { module = "com.github.fengzhizi715.SAF-Kotlin-log:okhttp", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation (libs.androidx.navigation.compose)
     implementation(libs.volley)
+    implementation(libs.androidx.runtime.livedata)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)

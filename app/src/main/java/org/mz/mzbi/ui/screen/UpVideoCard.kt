@@ -51,7 +51,7 @@ import org.mz.mzbi.R
 
 class UpVideoCard {
     @Composable
-    fun Cards(vd:String) {
+    fun Cards(vd:String,tit:String) {
 //        val okHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain -> //前置处理
 //            val request=chain.request().newBuilder()
 //                .build()
@@ -172,7 +172,7 @@ class UpVideoCard {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(5.dp,0.dp).offset(0.dp, (-10).dp),
-                        text = "和敬公主：乾隆宠女儿，会有多疯狂？【乾隆往事】",
+                        text = tit,
                         fontStyle = FontStyle.Normal,
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,

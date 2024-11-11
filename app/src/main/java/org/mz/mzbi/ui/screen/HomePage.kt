@@ -18,6 +18,7 @@ import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -25,6 +26,7 @@ import androidx.tv.material3.Tab
 import androidx.tv.material3.TabRow
 import androidx.tv.material3.Text
 import kotlinx.coroutines.delay
+import org.mz.mzbi.ui.vm.UpCardViewModel
 import kotlin.time.Duration.Companion.microseconds
 
 class HomePage {
@@ -38,6 +40,7 @@ class HomePage {
 
 // This index will be used to show a panel
         var tabPanelIndex by remember { mutableIntStateOf(selectedTabIndex) }
+        val viewModel1: UpCardViewModel = viewModel()
 
 // Change the tab-panel only after some delay
         LaunchedEffect(selectedTabIndex) {
@@ -62,7 +65,9 @@ class HomePage {
                             onClick = {
                                 selectedTabIndex = index
                                 if (selectedTabIndex == 0)
+                                    viewModel1.getUpVideoCardData("on1")
                                     navController.navigate("ReComPage")
+
                             },
                             content = {
 
@@ -80,10 +85,13 @@ class HomePage {
                     }
                 }
             }
+
             NavHost(navController = navController, startDestination = "ReComPage") {
                 //声明名为MainPage的页面路由
                 composable("ReComPage") {
                     //页面路由对应的页面组件
+                    val viewModel: UpCardViewModel = viewModel()
+                    viewModel.getUpVideoCardData("on")
                     ReComPage().UpVideoCardList()
                 }
             }
