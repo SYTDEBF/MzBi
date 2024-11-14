@@ -1,5 +1,8 @@
 package org.mz.mzbi.ui.screen
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
@@ -30,6 +33,7 @@ import org.mz.mzbi.ui.vm.UpCardViewModel
 import kotlin.time.Duration.Companion.microseconds
 
 class HomePage {
+    @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     @Preview(showBackground = true)
@@ -40,7 +44,7 @@ class HomePage {
 
 // This index will be used to show a panel
         var tabPanelIndex by remember { mutableIntStateOf(selectedTabIndex) }
-        val viewModel1: UpCardViewModel = viewModel()
+
 
 // Change the tab-panel only after some delay
         LaunchedEffect(selectedTabIndex) {
@@ -64,9 +68,13 @@ class HomePage {
                             onFocus = { selectedTabIndex = index },
                             onClick = {
                                 selectedTabIndex = index
-                                if (selectedTabIndex == 0)
-                                    viewModel1.getUpVideoCardData("on1")
+                                if (selectedTabIndex == 0){
                                     navController.navigate("ReComPage")
+                                }
+
+
+
+
 
                             },
                             content = {
@@ -90,9 +98,10 @@ class HomePage {
                 //声明名为MainPage的页面路由
                 composable("ReComPage") {
                     //页面路由对应的页面组件
-                    val viewModel: UpCardViewModel = viewModel()
-                    viewModel.getUpVideoCardData("on")
-                    ReComPage().UpVideoCardList()
+                    Log.d("跳转2","dsd")
+                    val s:UpCardViewModel = UpCardViewModel()
+
+                    ReComPage().UpVideoCardList(viewModel = s)
                 }
             }
         }

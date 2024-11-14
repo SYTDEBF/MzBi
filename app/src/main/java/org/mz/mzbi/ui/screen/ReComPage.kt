@@ -1,6 +1,8 @@
 package org.mz.mzbi.ui.screen
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -19,14 +21,13 @@ import org.mz.mzbi.ui.vm.UpCardViewModel
 
 
 class ReComPage {
+    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    @Preview
-    fun UpVideoCardList() {
+    fun UpVideoCardList(viewModel: UpCardViewModel) {
         val tabs = listOf("推荐", "热门", "Tab 3")
-        val viewModel: UpCardViewModel = viewModel()
-        //viewModel.getUpVideoCardData("on")
-        val upVideoCardDataListResult = viewModel.upVideoCardLiveData.observeAsState().value
 
+        val upVideoCardDataListResult = viewModel.upVideoCardLiveData.observeAsState()
+        viewModel.getUpVideoCardData("")
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             horizontalArrangement = Arrangement.spacedBy(5.dp),
@@ -34,13 +35,11 @@ class ReComPage {
         ) {
 
 
-            val cardList = upVideoCardDataListResult?.getOrNull()
+            val cardList = upVideoCardDataListResult.value?.getOrNull()
             if (cardList != null) {
                 for (i in cardList.indices) {
                     items(1) {
-                        UpVideoCard().Cards(
-                            HttpStrRep.greet(cardList[i].pic + "@672w_378h_1c_!web-home-common-cover.jpg"),cardList[i].title
-                        )
+                        UpVideoCard().Cards(cardList[i])
                     }
                 }
             }

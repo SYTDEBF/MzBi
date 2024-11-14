@@ -9,6 +9,7 @@ kotlin = "1.9.0"
 coreKtx = "1.15.0"
 appcompat = "1.7.0"
 composeBom = "2024.04.01"
+kotlinxDatetime = "0.6.1"
 navigationCompose = "2.8.1"
 okhttp = "2.6.9"
 retrofit = "2.11.0"
@@ -38,6 +39,7 @@ coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 okhttp = { module = "com.github.fengzhizi715.SAF-Kotlin-log:okhttp", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }

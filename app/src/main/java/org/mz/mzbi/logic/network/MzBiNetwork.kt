@@ -18,7 +18,6 @@ object MzBiNetwork {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     val body = response.body()
                     Log.d(TAG, "反对犯得上发3451￥$body")
-                    println("反对犯得上发3451￥$body")
                     if (body != null) continuation.resume(body)
                     else continuation.resumeWithException(
                         RuntimeException("response body is null"))

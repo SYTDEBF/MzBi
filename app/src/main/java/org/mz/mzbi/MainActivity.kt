@@ -1,7 +1,10 @@
 package org.mz.mzbi
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,6 +51,7 @@ import org.mz.mzbi.ui.screen.PartitionsPage
 import kotlin.time.Duration.Companion.microseconds
 
 class MainActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalTvMaterial3Api::class, ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 drawerContent = {
                     Column(
                         Modifier
-                            .background(Color.Gray)
+                            .background(Color(30, 32, 34))
                             .fillMaxHeight()
                             .padding(12.dp)
                             .selectableGroup(),
@@ -106,9 +110,11 @@ class MainActivity : AppCompatActivity() {
                         //声明名为MainPage的页面路由
                         composable("HomePage") {
                             //页面路由对应的页面组件
+                            Log.d("HomePage","HomePage")
                             HomePage().TabList()
                         }
                         composable("PartitionsPage") {
+                            Log.d("PartitionsPage","PartitionsPage")
                             PartitionsPage().TabList()
                         }
                     }

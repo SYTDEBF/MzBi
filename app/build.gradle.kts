@@ -66,6 +66,7 @@ dependencies {
     implementation (libs.androidx.navigation.compose)
     implementation(libs.volley)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.kotlinx.datetime)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)

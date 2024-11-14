@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.jetstream.presentation.theme
+package org.mz.mzbi.ui.theme
 
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.ShapeDefaults

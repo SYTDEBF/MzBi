@@ -11,7 +11,7 @@ object ServiceCreator {
     private val okHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain -> //前置处理
         val request = chain.request().newBuilder().
         header("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 11_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.1")
-            .header("Referer","https://www.bilibili.com/").cacheControl(CacheControl.Builder().noCache().noStore().build())
+            .header("Referer","https://www.bilibili.com/")
             .build()
         val response=chain.proceed(request)
         //后置处理

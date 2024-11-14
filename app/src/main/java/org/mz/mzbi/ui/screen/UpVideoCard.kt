@@ -1,15 +1,16 @@
 package org.mz.mzbi.ui.screen
 
 import android.content.ContentValues.TAG
+import android.os.Build
 import android.util.Log
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-
 
 
 import androidx.compose.foundation.layout.Row
@@ -33,11 +34,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.tv.material3.Border
 import androidx.tv.material3.Card
@@ -48,10 +53,15 @@ import coil.request.ImageRequest
 
 
 import org.mz.mzbi.R
+import org.mz.mzbi.logic.model.UpVideoCardData
+import org.mz.mzbi.tools.HttpStrRep
+import org.mz.mzbi.tools.VideoDataConvert
 
 class UpVideoCard {
+    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    fun Cards(vd:String,tit:String) {
+
+    fun Cards(cardData:UpVideoCardData) {
 //        val okHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain -> //前置处理
 //            val request=chain.request().newBuilder()
 //                .build()
@@ -102,17 +112,14 @@ class UpVideoCard {
                                 .paddingFromBaseline(0.dp, 2.dp),
 
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data(vd).addHeader("user-agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0").addHeader("Referer","https://www.bilibili.com/").build()
-
-//                                    add("Accept","image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8").
-//                        add().add("user-agent","").add("sec-fetch-dest","image")
-//                            .add(":method","GET").add(":scheme","https")
-                           // .build()).bu
+                                .data(HttpStrRep.greet(cardData.pic)+"@672w_378h_1c_!web-home-common-cover.jpg").addHeader("Referer","https://www.bilibili.com/").addHeader("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 11_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.1").
+                                build()
                                 ,
 
                             error = painterResource(R.drawable.ic_broken_image),
                             placeholder = painterResource(R.drawable.loading_img),
                             onSuccess = {
+                                Log.d(TAG, "success$")
                                 Log.d(TAG, "success")
                             },
                             onError = {
@@ -131,25 +138,39 @@ class UpVideoCard {
                                     painter = painterResource(id = R.drawable.plcount1),
                                     contentDescription = stringResource(R.string.hello_blank_fragment)
                                 )
-                                Text(
-                                    text = "20万",
-                                    modifier = Modifier.offset(5.dp, (-10).dp)
-                                        .align(Alignment.CenterVertically).align(Alignment.Bottom),
+                                if (cardData.stat.view>9999){Text(
+                                    text = VideoDataConvert.conToTenThousand(cardData.stat.view),
+                                    modifier = Modifier.offset(5.dp, (-10).dp),
+                                    fontFamily = FontFamily.Default,
                                     color = Color.White,
+                                    lineHeight = 20.sp,
                                     maxLines = 1,
                                     fontSize = 12.sp
-                                )
+                                )}else{
+                                    Text(
+                                        text = VideoDataConvert.conToTenThousand(cardData.stat.view),
+                                        modifier = Modifier.offset(5.dp, (-10).dp).align(Alignment.CenterVertically),
+                                        fontFamily = FontFamily.Default,
+                                        color = Color.White,
+                                        lineHeight = 20.sp,
+                                        maxLines = 1,
+                                        fontSize = 12.sp
+                                    )
+
+                                }
+
                                 Image(
                                     modifier = Modifier.offset(10.dp, (-10).dp).padding(),
                                     painter = painterResource(id = R.drawable.dmcount),
                                     contentDescription = stringResource(R.string.hello_blank_fragment)
                                 )
                                 Text(
-                                    text = "6000万",
+                                    text = VideoDataConvert.conToTenThousand(cardData.stat.danmaku),
                                     modifier = Modifier.offset(10.dp, (-10).dp)
                                         .align(Alignment.CenterVertically).align(Alignment.Bottom),
                                     color = Color.White,
                                     maxLines = 1,
+                                    textAlign = TextAlign.Center,
                                     fontSize = 12.sp
                                 )
 
@@ -157,7 +178,7 @@ class UpVideoCard {
                             }
                             Row(horizontalArrangement = Arrangement.End) {
                                 Text(
-                                    text = "12:30",
+                                    text = VideoDataConvert.conDurationTo(cardData.duration),
                                     modifier = Modifier.offset((-3).dp, (-12).dp).align(Alignment.CenterVertically),
                                     color = Color.White,
                                     maxLines = 1,
@@ -171,8 +192,9 @@ class UpVideoCard {
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(41.dp)
                             .padding(5.dp,0.dp).offset(0.dp, (-10).dp),
-                        text = tit,
+                        text = cardData.title,
                         fontStyle = FontStyle.Normal,
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
@@ -188,7 +210,7 @@ class UpVideoCard {
                                 contentDescription = stringResource(R.string.hello_blank_fragment)
                             )
                             Text(
-                                text = "正在吃的舒服的",
+                                text = cardData.owner.name,
                                 Modifier.align(Alignment.CenterVertically).offset(0.dp, (-1).dp),
                                 fontWeight = FontWeight.Thin,
                                 fontSize = 12.sp,
@@ -198,8 +220,9 @@ class UpVideoCard {
                         }
                         Row(horizontalArrangement = Arrangement.End) {
                             Text(
-                                modifier = Modifier.align(Alignment.CenterVertically),
-                                text = "3天前",
+                                modifier =
+                                Modifier.align(Alignment.CenterVertically),
+                                text = VideoDataConvert.conUnixTimeToISO(cardData.pubdate),
                                 fontWeight = FontWeight.Thin,
                                 fontSize = 12.sp
                             )
