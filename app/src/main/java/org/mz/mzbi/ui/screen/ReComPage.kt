@@ -23,11 +23,11 @@ import org.mz.mzbi.ui.vm.UpCardViewModel
 class ReComPage {
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    fun UpVideoCardList(viewModel: UpCardViewModel) {
+    fun UpVideoCardList() {
         val tabs = listOf("推荐", "热门", "Tab 3")
-
-        val upVideoCardDataListResult = viewModel.upVideoCardLiveData.observeAsState()
-        viewModel.getUpVideoCardData("")
+        val upCardViewModel = UpCardViewModel()
+        val upVideoCardDataListResult = upCardViewModel.upVideoCardLiveData.observeAsState()
+        upCardViewModel.getUpVideoCardData("")
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             horizontalArrangement = Arrangement.spacedBy(5.dp),

@@ -10,7 +10,7 @@ import org.mz.mzbi.logic.model.UpVideoCardData
 
 class UpCardViewModel : ViewModel(){
     private val getCardDataLiveData = MutableLiveData<String>()
-    val upVideoCardLiveData: LiveData<Result<List<UpVideoCardData>>> = getCardDataLiveData.switchMap {  querys ->
+    val upVideoCardLiveData: LiveData<Result<List<UpVideoCardData>>> = getCardDataLiveData.switchMap {
         Repository.upVideoCardData()
     }
     fun getUpVideoCardData(querys: String) {

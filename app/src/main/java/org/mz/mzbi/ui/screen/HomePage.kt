@@ -99,9 +99,7 @@ class HomePage {
                 composable("ReComPage") {
                     //页面路由对应的页面组件
                     Log.d("跳转2","dsd")
-                    val s:UpCardViewModel = UpCardViewModel()
-
-                    ReComPage().UpVideoCardList(viewModel = s)
+                    ReComPage().UpVideoCardList()
                 }
             }
         }

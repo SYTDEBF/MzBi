@@ -18,7 +18,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MzBi">
+        android:enableOnBackInvokedCallback="true"
+        android:theme="@style/Theme.MzBi"
+        tools:targetApi="tiramisu">
         <activity
             android:name=".MainActivity"
             android:exported="true">
